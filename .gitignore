@@ -1,0 +1,6 @@
+build/CMakeFiles/
+build/mr_sim
+build/*.txt
+build/*.cmake
+build/*.json
+build/Makefile
