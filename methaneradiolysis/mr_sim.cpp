@@ -11,12 +11,14 @@
 #include "physics.hh"
 #include "action.hh"
 #include "CH4IonizationProcess.hh"
+#include "root_species.hh"
+#include "root_process.hh"
 
 int main(int argc, char** argv){
 
-    G4double cutOffEnergy  = (argc > 1) ? std::stod(argv[1]) * eV  :  7.0 *eV;
-    G4double initialEnergy = (argc > 2) ? std::stod(argv[2]) * keV : 100.0 * keV;
-    int      nRuns         = (argc > 3) ? std::stoi(argv[3])       : 10;
+    G4double cutOffEnergy  = 7.0 * eV;
+    G4double initialEnergy = 100.0 * keV;
+    int      nRuns         = (argc > 1) ? std::stoi(argv[1]) : 10;
 
     unsigned int nThreads = std::thread::hardware_concurrency();
     if (nThreads == 0) nThreads = 4;
@@ -35,6 +37,9 @@ int main(int argc, char** argv){
     UImanager->ApplyCommand("/run/beamOn " + std::to_string(nRuns));
 
     delete runManager;
+
+    root_species(nRuns);
+    root_process();
 
 
     return 0;
