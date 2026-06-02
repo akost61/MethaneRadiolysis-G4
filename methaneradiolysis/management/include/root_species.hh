@@ -6,11 +6,13 @@
 #include "TFile.h"
 #include "TTree.h"
 
-void root_species(int N_sims) {
-    float r = 50;
-    float h = 60;
+void root_species(int N_sims, float height, float radius) {
+    float r = radius;
+    float h = height;
     float volume_cm3 = (std::numbers::pi) * r* r * h;
     float electrons_second = 1.602e-19 / 200; // charge (electron = 1.602e-19 coulombs) divided by current (200 micron Amps)
+    float rate = 0;
+    float A = 6.022e23;
 
 
     TFile* f = TFile::Open("output.root");
@@ -38,7 +40,8 @@ void root_species(int N_sims) {
     for (const auto& s : species) {
         Long64_t n = t->GetEntries(("particleName == \"" + s + "\"").c_str());
         std::cout << s << ": " << n << std::endl;
-        std::cout << "Moles per second per cm3 of " << s << " :" <<  (n/N_sims) * electrons_second << std::endl;
+        rate = (n/N_sims) * electrons_second;
+        std::cout << "Moles per second per cm3 of " << s << " :" <<  rate / (A * volume_cm3) << std::endl;
         total += n;
     }
     std::cout << "\nSum of total species: " << total << std::endl;

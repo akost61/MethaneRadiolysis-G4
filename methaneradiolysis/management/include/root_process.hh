@@ -6,7 +6,7 @@
 #include "TFile.h"
 #include "TTree.h"
 
-void root_process() {
+void root_process(int nRuns) {
 
     TFile* f = TFile::Open("output.root");
     if (!f || f->IsZombie()) {
@@ -29,7 +29,7 @@ void root_process() {
                                 , "Ion5Process", "Ion6Process", "Ion7Process","ND1Process" ,"ND2Process" ,"ND3Process",
                                 "J3Process", "J4Process", "Nu1Process", "Nu2Process", "Nu3Process", "Nu4Process", 
                                 "CI", "CIII", "CIV", "CH G-Band","H-alpha","H-beta", "H-delta", "H-gamma","Ly-alpha", "Ly-beta", "Ly-gamma"}; 
-    std::cout << "\n=== Process Counts ===" << std::endl;
+    std::cout << "\n===========  Process Counts ===========" << std::endl;
     for (const auto& proc : procs) {
         Long64_t n = t->GetEntries(("proc == \"" + proc + "\"").c_str());
         std::cout << proc << ": " << n << std::endl;

@@ -1,6 +1,7 @@
 #include "construction.hh"
 
-MyDetectorConstruction::MyDetectorConstruction() {}
+MyDetectorConstruction::MyDetectorConstruction(G4double radius, G4double height)
+    : fCylinderRadius(radius), fCylinderHeight(height) {}
 MyDetectorConstruction::~MyDetectorConstruction() {}
 
 G4VPhysicalVolume* MyDetectorConstruction::Construct()
@@ -47,8 +48,8 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct()
 
     G4cout << "CH4 density: " << density25C/(kg/m3) << " kg/m3" << G4endl;
 
-    G4double cylinder_radius = 50  * cm;
-    G4double cylinder_height = 60  * cm;
+    G4double cylinder_radius = fCylinderRadius;
+    G4double cylinder_height = fCylinderHeight;
     G4double cylinder_face   = 10  * cm;
     G4double cylinder_center_z = cylinder_face + cylinder_height/2;
 

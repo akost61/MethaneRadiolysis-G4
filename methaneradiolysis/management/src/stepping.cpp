@@ -62,7 +62,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
             edep += track->GetKineticEnergy();
             kineticEnergy = 0.0 * eV;
             const_cast<G4Track*>(track)->SetTrackStatus(fStopAndKill);
-            processName = "Electron Killed";
         }
 
         if (processName != "ElasticProcess"){

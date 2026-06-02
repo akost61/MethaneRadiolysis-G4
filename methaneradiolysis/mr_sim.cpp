@@ -16,21 +16,27 @@
 
 int main(int argc, char** argv){
 
-    G4double cutOffEnergy  = 7.0 * eV;
-    G4double initialEnergy = 100.0 * keV;
-    int      nRuns         = (argc > 1) ? std::stoi(argv[1]) : 10;
+    G4double cutOffEnergy      = 7.0 * eV;
+    G4double initialEnergy     = 100.0 * keV;
+    int      nRuns             = (argc > 1) ? std::stoi(argv[1]) : 10;
+    G4double cylinderRadius    = 50.0 * cm;
+    G4double cylinderHeight    = 60.0 * cm;
 
-    unsigned int nThreads = std::thread::hardware_concurrency();
+    G4int nThreads = G4Threading::G4GetNumberOfCores();
+
+    G4cout << "NUMBER OF THREADS: " << nThreads << G4endl;
+
     if (nThreads == 0) nThreads = 4;
 
     CH4IonizationProcess::SetSecondaryMinEnergy(cutOffEnergy);
 
     G4MTRunManager *runManager = new G4MTRunManager();
     runManager->SetNumberOfThreads(nThreads);
-    runManager->SetUserInitialization(new MyDetectorConstruction());
+    runManager->SetUserInitialization(new MyDetectorConstruction(cylinderRadius, cylinderHeight));
     runManager->SetUserInitialization(new MyPhysics());
     runManager->SetUserInitialization(new MyActionInitialization(initialEnergy, cutOffEnergy));
     runManager->Initialize();
+
 
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
     UImanager->ApplyCommand("/tracking/verbose 0");
@@ -38,8 +44,9 @@ int main(int argc, char** argv){
 
     delete runManager;
 
-    root_species(nRuns);
-    root_process();
+
+    root_species(nRuns, cylinderHeight / 10, cylinderRadius / 10);
+    root_process(nRuns);
 
 
     return 0;

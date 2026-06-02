@@ -1,0 +1,94 @@
+NUMBER OF THREADS: 4
+
+**************************************************************
+ Geant4 version Name: geant4-11-04 [MT]   (5-December-2025)
+  << in Multi-threaded mode >> 
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+CH4 density: 0.61121 kg/m3
+Checking overlaps for volume physMethane:0 (G4Tubs) ... OK! 
+Custom elastic and inelastic processes registered for electrons
+... set ntuple merging row mode : row-wise - done
+... create file : output.root - done
+... open analysis file : output.root - done
+... open main analysis file : output.root - done
+G4WT0 > ... set ntuple merging row mode : row-wise - done
+G4WT3 > ... set ntuple merging row mode : row-wise - done
+G4WT2 > ... set ntuple merging row mode : row-wise - done
+G4WT1 > ... set ntuple merging row mode : row-wise - done
+[CrossSectionTable] Loaded 50 points from Tables/cross_section.csv  E = [1, 100000] eV
+... write file : output.root - done
+... close file : output.root - done
+Total entries: 129747
+
+=========== Species Counts and Moles per Second per cm^3===========
+
+Volume = 471239cm^3
+electrons per second = 8.01e-22
+Number of Simulations= 10
+
+CH4+: 23878
+Moles per second per cm3 of CH4+ :1.91199e-18
+CH3+: 18719
+Moles per second per cm3 of CH3+ :1.49867e-18
+CH2+: 2394
+Moles per second per cm3 of CH2+ :1.91439e-19
+CH+: 257
+Moles per second per cm3 of CH+ :2.0025e-20
+C+: 1611
+Moles per second per cm3 of C+ :1.28961e-19
+H*: 36022
+Moles per second per cm3 of H* :2.8852e-18
+H2: 16656
+Moles per second per cm3 of H2 :1.33367e-18
+H2+: 147
+Moles per second per cm3 of H2+ :1.1214e-20
+H+: 945
+Moles per second per cm3 of H+ :7.5294e-20
+CH3*: 17883
+Moles per second per cm3 of CH3* :1.43219e-18
+CH2*: 10517
+Moles per second per cm3 of CH2* :8.41851e-19
+CH*: 413
+Moles per second per cm3 of CH* :3.2841e-20
+H-: 305
+Moles per second per cm3 of H- :2.403e-20
+
+Sum of total species: 129747
+
+Total entries: 268893
+
+===========  Process Counts ===========
+EAProcess: 305
+Ion1Process: 23878
+Ion2Process: 18830
+Ion3Process: 2394
+Ion4Process: 945
+Ion5Process: 257
+Ion6Process: 147
+Ion7Process: 1611
+ND1Process: 16633
+ND2Process: 10370
+ND3Process: 413
+J3Process: 52202
+J4Process: 61861
+Nu1Process: 13725
+Nu2Process: 19240
+Nu3Process: 24795
+Nu4Process: 20604
+CI: 18
+CIII: 10
+CIV: 5
+CH G-Band: 200
+H-alpha: 108
+H-beta: 32
+H-delta: 9
+H-gamma: 19
+Ly-alpha: 203
+Ly-beta: 51
+Ly-gamma: 28
