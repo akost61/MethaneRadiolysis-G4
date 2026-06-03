@@ -52,13 +52,13 @@ G4VParticleChange* CH4DissociationProcess::PostStepDoIt(const G4Track& track,
             new G4Track(product, track.GetGlobalTime(), position);
         productTrack->SetTouchableHandle(track.GetTouchableHandle());
         aParticleChange.AddSecondary(productTrack);
-        am->FillNtupleDColumn(1, 0, position.x() / CLHEP::mm);
-        am->FillNtupleDColumn(1, 1, position.y() / CLHEP::mm);
-        am->FillNtupleDColumn(1, 2, position.z() / CLHEP::mm);
-        am->FillNtupleDColumn(1, 3, track.GetTrackID());        // electron ID
-        am->FillNtupleSColumn(1, 4, productName);
-        am->FillNtupleDColumn(1, 5, track.GetGlobalTime() / CLHEP::ns);
-        am->FillNtupleIColumn(1, 6, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+        am->FillNtupleIColumn(1, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+        am->FillNtupleDColumn(1, 1, track.GetTrackID());
+        am->FillNtupleDColumn(1, 2, position.x() / CLHEP::mm);
+        am->FillNtupleDColumn(1, 3, position.y() / CLHEP::mm);
+        am->FillNtupleDColumn(1, 4, position.z() / CLHEP::mm);
+        am->FillNtupleSColumn(1, 5, productName);
+        am->FillNtupleDColumn(1, 6, track.GetGlobalTime() / CLHEP::ns);
         am->AddNtupleRow(1);
     }
 

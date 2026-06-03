@@ -46,12 +46,12 @@ G4VParticleChange* CH4PhotonProcess::PostStepDoIt(const G4Track& track,
     aParticleChange.ProposeLocalEnergyDeposit(0);
 
     auto* am = G4AnalysisManager::Instance();
-    am->FillNtupleDColumn(2, 0, position.x() / mm);
-    am->FillNtupleDColumn(2, 1, position.y() / mm);
-    am->FillNtupleDColumn(2, 2, position.z() / mm);
-    am->FillNtupleDColumn(2, 3, fPhotonEnergy / eV);
-    am->FillNtupleDColumn(2, 4, track.GetGlobalTime() / ns);
-    am->FillNtupleIColumn(2, 5, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+    am->FillNtupleIColumn(2, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+    am->FillNtupleDColumn(2, 1, position.x() / mm);
+    am->FillNtupleDColumn(2, 2, position.y() / mm);
+    am->FillNtupleDColumn(2, 3, position.z() / mm);
+    am->FillNtupleDColumn(2, 4, fPhotonEnergy / eV);
+    am->FillNtupleDColumn(2, 5, track.GetGlobalTime() / ns);
     am->AddNtupleRow(2);
 
     

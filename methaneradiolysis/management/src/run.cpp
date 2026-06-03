@@ -11,36 +11,35 @@ RunAction::RunAction() : G4UserRunAction()
     
     if (isMaster) {
         analysisManager->CreateNtuple("electrons", "All Electrons");
-        analysisManager->CreateNtupleDColumn("energy");
-        analysisManager->CreateNtupleDColumn("x");
-        analysisManager->CreateNtupleDColumn("y");
-        analysisManager->CreateNtupleDColumn("z");
-        analysisManager->CreateNtupleDColumn("edep");
-        analysisManager->CreateNtupleDColumn("trackID");
-        analysisManager->CreateNtupleDColumn("parentID");
-        analysisManager->CreateNtupleDColumn("length");
-        analysisManager->CreateNtupleSColumn("proc");
-        analysisManager->CreateNtupleIColumn("runID");
+        analysisManager->CreateNtupleIColumn("runID");        // 0
+        analysisManager->CreateNtupleDColumn("electronID");   // 1
+        analysisManager->CreateNtupleDColumn("parentID");     // 2
+        analysisManager->CreateNtupleSColumn("proc");         // 3
+        analysisManager->CreateNtupleDColumn("x");            // 4
+        analysisManager->CreateNtupleDColumn("y");            // 5
+        analysisManager->CreateNtupleDColumn("z");            // 6
+        analysisManager->CreateNtupleDColumn("edep");         // 7
+        analysisManager->CreateNtupleDColumn("length");       // 8
+        analysisManager->CreateNtupleDColumn("energy");       // 9
         analysisManager->FinishNtuple();  // ntuple ID = 0
 
         analysisManager->CreateNtuple("particles", "Secondary Particle Creation");
-        analysisManager->CreateNtupleDColumn("x");
-        analysisManager->CreateNtupleDColumn("y");
-        analysisManager->CreateNtupleDColumn("z");
-        analysisManager->CreateNtupleDColumn("electronTrackID");
-        analysisManager->CreateNtupleSColumn("particleName");
-        analysisManager->CreateNtupleDColumn(1, "globalTime_ns");
-        analysisManager->CreateNtupleIColumn(1, "runID");
-
+        analysisManager->CreateNtupleIColumn("runID");           // 0
+        analysisManager->CreateNtupleDColumn("electronTrackID"); // 1
+        analysisManager->CreateNtupleDColumn("x");               // 2
+        analysisManager->CreateNtupleDColumn("y");               // 3
+        analysisManager->CreateNtupleDColumn("z");               // 4
+        analysisManager->CreateNtupleSColumn("particleName");    // 5
+        analysisManager->CreateNtupleDColumn("globalTime_ns");   // 6
         analysisManager->FinishNtuple();  // ntuple ID = 1
 
         analysisManager->CreateNtuple("photons", "Photon Creation");
-        analysisManager->CreateNtupleDColumn("x");
-        analysisManager->CreateNtupleDColumn("y");
-        analysisManager->CreateNtupleDColumn("z");
-        analysisManager->CreateNtupleDColumn("energy");
-        analysisManager->CreateNtupleDColumn("globalTime_ns");
-        analysisManager->CreateNtupleIColumn("runID");
+        analysisManager->CreateNtupleIColumn("runID");        // 0
+        analysisManager->CreateNtupleDColumn("x");            // 1
+        analysisManager->CreateNtupleDColumn("y");            // 2
+        analysisManager->CreateNtupleDColumn("z");            // 3
+        analysisManager->CreateNtupleDColumn("energy");       // 4
+        analysisManager->CreateNtupleDColumn("globalTime_ns");// 5
         analysisManager->FinishNtuple();  // ntuple ID = 2
     }
 }

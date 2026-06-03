@@ -9,8 +9,9 @@
 void root_species(int N_sims, float height, float radius) {
     float r = radius;
     float h = height;
-    float volume_cm3 = (std::numbers::pi) * r* r * h;
-    float electrons_second = 1.602e-19 / 200; // charge (electron = 1.602e-19 coulombs) divided by current (200 micron Amps)
+    float volume_cm3 = (std::numbers::pi) * r * r * h;
+    float charge = 1.602e-19;
+    float electrons_second =  200 / charge; 
     float rate = 0;
     float A = 6.022e23;
 
