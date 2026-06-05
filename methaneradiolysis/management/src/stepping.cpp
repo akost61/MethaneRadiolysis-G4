@@ -31,17 +31,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
             G4ThreeVector position = step->GetPostStepPoint()->GetPosition();
             auto analysisManager  = G4AnalysisManager::Instance();
 
-            analysisManager->FillNtupleIColumn(0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
-            analysisManager->FillNtupleDColumn(1, track->GetTrackID());
-            analysisManager->FillNtupleDColumn(2, track->GetParentID());
-            analysisManager->FillNtupleSColumn(3, G4String("Escaped"));
-            analysisManager->FillNtupleDColumn(4, position.x()/mm);
-            analysisManager->FillNtupleDColumn(5, position.y()/mm);
-            analysisManager->FillNtupleDColumn(6, position.z()/mm);
-            analysisManager->FillNtupleDColumn(7, escapeEnergy/eV);
-            analysisManager->FillNtupleDColumn(8, track->GetTrackLength()/mm);
-            analysisManager->FillNtupleDColumn(9, escapeEnergy/eV);
-            analysisManager->AddNtupleRow();
+            analysisManager->FillNtupleIColumn(0,0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+            analysisManager->FillNtupleDColumn(0,1, track->GetTrackID());
+            analysisManager->FillNtupleDColumn(0,2, track->GetParentID());
+            analysisManager->FillNtupleSColumn(0,3, G4String("Escaped"));
+            analysisManager->FillNtupleDColumn(0,4, position.x()/mm);
+            analysisManager->FillNtupleDColumn(0,5, position.y()/mm);
+            analysisManager->FillNtupleDColumn(0,6, position.z()/mm);
+            analysisManager->FillNtupleDColumn(0,7, escapeEnergy/eV);
+            analysisManager->FillNtupleDColumn(0,8, track->GetTrackLength()/mm);
+            analysisManager->FillNtupleDColumn(0,9, escapeEnergy/eV);
+            analysisManager->AddNtupleRow(0);
         }
         return;
     }
@@ -69,17 +69,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
             G4ThreeVector position = step->GetPostStepPoint()->GetPosition();
             auto analysisManager = G4AnalysisManager::Instance();
             
-            analysisManager->FillNtupleIColumn(0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
-            analysisManager->FillNtupleDColumn(1, track->GetTrackID());
-            analysisManager->FillNtupleDColumn(2, track->GetParentID());
-            analysisManager->FillNtupleSColumn(3, processName);
-            analysisManager->FillNtupleDColumn(4, position.x()/mm);
-            analysisManager->FillNtupleDColumn(5, position.y()/mm);
-            analysisManager->FillNtupleDColumn(6, position.z()/mm);
-            analysisManager->FillNtupleDColumn(7, edep/eV);
-            analysisManager->FillNtupleDColumn(8, track->GetTrackLength()/mm);
-            analysisManager->FillNtupleDColumn(9, kineticEnergy/eV);
-            analysisManager->AddNtupleRow();
+            analysisManager->FillNtupleIColumn(0, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+            analysisManager->FillNtupleDColumn(0, 1, track->GetTrackID());
+            analysisManager->FillNtupleDColumn(0, 2, track->GetParentID());
+            analysisManager->FillNtupleSColumn(0, 3, processName);
+            analysisManager->FillNtupleDColumn(0, 4, position.x()/mm);
+            analysisManager->FillNtupleDColumn(0, 5, position.y()/mm);
+            analysisManager->FillNtupleDColumn(0, 6, position.z()/mm);
+            analysisManager->FillNtupleDColumn(0, 7, edep/eV);
+            analysisManager->FillNtupleDColumn(0, 8, track->GetTrackLength()/mm);
+            analysisManager->FillNtupleDColumn(0, 9, kineticEnergy/eV);
+            analysisManager->AddNtupleRow(0); 
         }
     }
 }
