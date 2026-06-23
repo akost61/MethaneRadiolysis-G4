@@ -5,6 +5,8 @@ methaneradiolysis/build/mr_sim
 methaneradiolysis/build/*.txt
 methaneradiolysis/build/*.cmake
 methaneradiolysis/build/*.json
+methaneradiolysis/build/*.root
+methaneradiolysis/build/100kSim
 methaneradiolysis/build/Makefile
 
 *.txt
