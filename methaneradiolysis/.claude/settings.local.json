@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -n \"scoringManager\\\\|ScoringManager\\\\|ParallelWorld\" /Users/emmajia/Documents/GEANT4/geant4-v11.4.0/source/run/src/G4RunManagerKernel.cc)",
-      "Read(//tmp/**)"
-    ]
-  }
-}
