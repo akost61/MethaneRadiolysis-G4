@@ -1,8 +1,10 @@
-.claude
-build/CMakeFiles/
-build/mr_sim
-build/*.txt
-build/*.cmake
-build/*.json
-build/Makefile
+methaneradiolysis/.claude
+methaneradiolysis/.vscode
+methaneradiolysis/build/CMakeFiles/
+methaneradiolysis/build/mr_sim
+methaneradiolysis/build/*.txt
+methaneradiolysis/build/*.cmake
+methaneradiolysis/build/*.json
+methaneradiolysis/build/Makefile
+
 *.txt
