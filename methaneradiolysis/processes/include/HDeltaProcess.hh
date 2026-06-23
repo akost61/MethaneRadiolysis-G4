@@ -3,7 +3,7 @@
 
 #include "CH4PhotonProcess.hh"
 
-
+// Balmer-delta (n=6→2) photon emission from excited H*
 class HDeltaProcess : public CH4PhotonProcess
 {
 public:

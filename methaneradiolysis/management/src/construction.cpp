@@ -1,7 +1,7 @@
 #include "construction.hh"
 
-MyDetectorConstruction::MyDetectorConstruction(G4double radius, G4double height)
-    : fCylinderRadius(radius), fCylinderHeight(height) {}
+MyDetectorConstruction::MyDetectorConstruction(G4double radius, G4double height, G4double temperature, G4double pressure)
+    : fCylinderRadius(radius), fCylinderHeight(height), fTemperature(temperature), fPressure(pressure) {}
 MyDetectorConstruction::~MyDetectorConstruction() {}
 
 G4VPhysicalVolume* MyDetectorConstruction::Construct()
@@ -32,21 +32,21 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct()
 
     G4Material* nistMethane = nist->FindOrBuildMaterial("G4_METHANE");
 
-    G4double temperature    = 298.15 * kelvin;   
-    G4double pressure       = 1.0   * atmosphere;
+    G4double stpDensity    = 0.000667 * g/cm3;
+    G4double stpTemp       = 273.15 * kelvin;
+    G4double stpPressure   = 1.0 * atmosphere;
+    G4double scaledDensity = stpDensity * (fPressure / stpPressure) * (stpTemp / fTemperature);
 
-    G4double densitySTP  = nistMethane->GetDensity();          
-    G4double density25C  = densitySTP * (273.15*kelvin / temperature)
-                                      * (pressure / atmosphere);
 
-    G4Material* methane25C = new G4Material("CH4",
-                                             density25C,
-                                             nistMethane,
-                                             kStateGas,
-                                             temperature,
-                                             pressure);
 
-    G4cout << "CH4 density: " << density25C/(kg/m3) << " kg/m3" << G4endl;
+    G4Material* methane25C = nist->BuildMaterialWithNewDensity(
+        "CH4",
+        "G4_METHANE",
+        scaledDensity,
+        fTemperature,
+        fPressure
+    );
+
 
     G4double cylinder_radius = fCylinderRadius;
     G4double cylinder_height = fCylinderHeight;

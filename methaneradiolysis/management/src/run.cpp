@@ -1,53 +1,53 @@
 #include "run.hh"
 #include "G4Run.hh"
+#include "G4MTRunManager.hh"
+#include "G4AnalysisManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "VoxelEnergyMap.hh"
 
 RunAction::RunAction() : G4UserRunAction()
 {
-
     auto analysisManager = G4AnalysisManager::Instance();
     analysisManager->SetNtupleMerging(true);
     analysisManager->SetVerboseLevel(1);
     analysisManager->SetFileName("output.root");
-    
-    analysisManager->CreateNtuple("electrons", "All Electrons");
-    analysisManager->CreateNtupleIColumn("runID");        // 0
-    analysisManager->CreateNtupleDColumn("electronID");   // 1
-    analysisManager->CreateNtupleDColumn("parentID");     // 2
-    analysisManager->CreateNtupleSColumn("proc");         // 3
-    analysisManager->CreateNtupleDColumn("x");            // 4
-    analysisManager->CreateNtupleDColumn("y");            // 5
-    analysisManager->CreateNtupleDColumn("z");            // 6
-    analysisManager->CreateNtupleDColumn("edep");         // 7
-    analysisManager->CreateNtupleDColumn("length");       // 8
-    analysisManager->CreateNtupleDColumn("energy");       // 9
-    analysisManager->FinishNtuple();  // ntuple ID = 0
 
     analysisManager->CreateNtuple("particles", "Secondary Particle Creation");
-    analysisManager->CreateNtupleIColumn("runID");           // 0
-    analysisManager->CreateNtupleDColumn("electronTrackID"); // 1
-    analysisManager->CreateNtupleDColumn("x");               // 2
-    analysisManager->CreateNtupleDColumn("y");               // 3
-    analysisManager->CreateNtupleDColumn("z");               // 4
-    analysisManager->CreateNtupleSColumn("particleName");    // 5
-    analysisManager->CreateNtupleDColumn("globalTime_ns");   // 6
-    analysisManager->FinishNtuple();  // ntuple ID = 1
+    analysisManager->CreateNtupleIColumn("runID");
+    analysisManager->CreateNtupleDColumn("electronTrackID");
+    analysisManager->CreateNtupleDColumn("x");
+    analysisManager->CreateNtupleDColumn("y");
+    analysisManager->CreateNtupleDColumn("z");
+    analysisManager->CreateNtupleSColumn("particleName");
+    analysisManager->CreateNtupleDColumn("globalTime_ns");
+    analysisManager->FinishNtuple(0);
 
     analysisManager->CreateNtuple("photons", "Photon Creation");
-    analysisManager->CreateNtupleIColumn("runID");        // 0
-    analysisManager->CreateNtupleDColumn("x");            // 1
-    analysisManager->CreateNtupleDColumn("y");            // 2
-    analysisManager->CreateNtupleDColumn("z");            // 3
-    analysisManager->CreateNtupleDColumn("energy");       // 4
-    analysisManager->CreateNtupleDColumn("globalTime_ns");// 5
-    analysisManager->FinishNtuple();  // ntuple ID = 2
+    analysisManager->CreateNtupleIColumn("runID");
+    analysisManager->CreateNtupleDColumn("x");
+    analysisManager->CreateNtupleDColumn("y");
+    analysisManager->CreateNtupleDColumn("z");
+    analysisManager->CreateNtupleDColumn("energy");
+    analysisManager->CreateNtupleDColumn("globalTime_ns");
+    analysisManager->FinishNtuple(1);
+
+    analysisManager->CreateNtuple("escaped", "Energy Escapes Methane");
+    analysisManager->CreateNtupleIColumn("runID");
+    analysisManager->CreateNtupleDColumn("energy");
+    analysisManager->FinishNtuple(2);
+
 }
 
-RunAction::~RunAction(){}
+RunAction::~RunAction() {}
 
 void RunAction::BeginOfRunAction(const G4Run*)
 {
     auto analysisManager = G4AnalysisManager::Instance();
     analysisManager->OpenFile();
+
+
+    fMap = VoxelEnergyMap::GetInstance();
+    fMap->SetDimensions(1000, 1000, 1200);
 }
 
 void RunAction::EndOfRunAction(const G4Run*)
@@ -55,4 +55,16 @@ void RunAction::EndOfRunAction(const G4Run*)
     auto analysisManager = G4AnalysisManager::Instance();
     analysisManager->Write();
     analysisManager->CloseFile();
+
+    if (!IsMaster()) {
+        // get the master RunAction and merge worker map into it
+        const auto* masterAction = static_cast<const RunAction*>(
+            G4MTRunManager::GetMasterRunManager()->GetUserRunAction());
+        masterAction->GetMap()->Merge(fMap);
+    } else {
+
+        fMap->SaveToFile("voxel_map.txt");
+        G4cout << "[VoxelEnergyMap] " << fMap->OccupiedVoxels()
+               << " voxels hit, saved to voxel_map.txt" << G4endl;
+    }
 }

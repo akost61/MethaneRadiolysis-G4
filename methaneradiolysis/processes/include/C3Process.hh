@@ -4,6 +4,7 @@
 #include "CH4PhotonProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// CIII doubly-ionized carbon emission line
 class C3Process : public CH4PhotonProcess {
 public:
     C3Process()

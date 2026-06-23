@@ -4,6 +4,7 @@
 #include "CH4PhotonProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// Lyman-beta (n=3→1) photon emission from excited H*
 class LyBetaProcess : public CH4PhotonProcess {
 public:
     LyBetaProcess(): CH4PhotonProcess("Ly-beta",12.08  * eV){}

@@ -2,16 +2,20 @@
 #define RUN_HH
 
 #include "G4UserRunAction.hh"
-#include "G4AnalysisManager.hh"
+#include "VoxelEnergyMap.hh"
 
-class RunAction : public G4UserRunAction
-{
+class RunAction : public G4UserRunAction {
 public:
     RunAction();
-    ~RunAction() override;
+    ~RunAction();
 
     void BeginOfRunAction(const G4Run*) override;
     void EndOfRunAction(const G4Run*)   override;
+
+    VoxelEnergyMap* GetMap() const { return fMap; }
+
+private:
+    VoxelEnergyMap* fMap = nullptr;
 };
 
 #endif

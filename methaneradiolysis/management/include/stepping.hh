@@ -3,6 +3,7 @@
 #define STEPPING_HH
 
 #include "G4UserSteppingAction.hh"
+#include "G4ParticleChange.hh"
 #include "globals.hh"
 
 
@@ -15,6 +16,7 @@ public:
     virtual void UserSteppingAction(const G4Step* step);
 private:
     G4double fCutOffEnergy;
+    G4ParticleChange aParticleChange;
 
 };
 

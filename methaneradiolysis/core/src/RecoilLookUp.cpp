@@ -96,14 +96,18 @@ G4double RecoilLookUp::SelectRecoil(G4double kineticEnergy, G4double betaAngle) 
         return centerRecoil[rightIndex] * eV;
     }
 
-    for (size_t i=0; i < fAngles.size(); i++ ){
+    for (size_t i=0; i < fAngles.size() - 1; i++ ){
         if (betaAngle >= fAngles[i] && betaAngle < fAngles[i+1]) {
             leftIndex = i;
             rightIndex = i+1;
         }
     }
+
+    G4double leftEnergy  = centerRecoil[leftIndex];
+    G4double rightEnergy = centerRecoil[rightIndex];    
     
     G4double weight = (betaAngle - fAngles[leftIndex]) / (fAngles[rightIndex] - fAngles[leftIndex]);
 
-    return 0 * eV;
+    return (leftEnergy + weight * (rightEnergy - leftEnergy)) * eV;
+
 }

@@ -4,6 +4,7 @@
 #include "CH4PhotonProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// CIV triply-ionized carbon emission line
 class C4Process : public CH4PhotonProcess {
 public:
     C4Process()

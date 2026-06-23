@@ -16,7 +16,7 @@
 class MyDetectorConstruction: public G4VUserDetectorConstruction
 {
     public:
-    MyDetectorConstruction(G4double radius, G4double height);
+    MyDetectorConstruction(G4double radius, G4double height, G4double temperature, G4double pressure);
     ~MyDetectorConstruction();
 
     virtual G4VPhysicalVolume *Construct();
@@ -24,6 +24,8 @@ class MyDetectorConstruction: public G4VUserDetectorConstruction
     private:
     G4double fCylinderRadius;
     G4double fCylinderHeight;
+    G4double fPressure;
+    G4double fTemperature;
 };
 
 #endif

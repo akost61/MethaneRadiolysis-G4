@@ -4,7 +4,7 @@
 
 #include "CH4PhotonProcess.hh"
 
-
+// Balmer-beta (n=4→2) photon emission from excited H*
 class HBetaProcess : public CH4PhotonProcess
 {
 public:

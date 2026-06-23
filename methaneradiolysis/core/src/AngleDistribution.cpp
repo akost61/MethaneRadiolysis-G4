@@ -100,13 +100,12 @@ G4double AngularDistribution::SampleAngle(G4double kineticEnergy) const {
 }
 
 G4ThreeVector AngularDistribution::RotateDirection(const G4ThreeVector& oldDirection,
-                                                    G4double kineticEnergy) const
+                                                    G4double kineticEnergy, G4double betaAngle) const
 {
 
-    G4double angle    = SampleAngle(kineticEnergy);
 
-    G4double cosTheta = std::cos(angle);
-    G4double sinTheta = std::sin(angle);            
+    G4double cosTheta = std::cos(betaAngle);
+    G4double sinTheta = std::sin(betaAngle);            
     G4double phi      = CLHEP::twopi * G4UniformRand();
 
     G4ThreeVector perp1, perp2;

@@ -4,7 +4,7 @@
 #include "CH4DissociationProcess.hh"
 
 
-//EIE3 : CH₄ + e⁻ -> CH* + H₂ + H* + e⁻
+// ND3 : CH₄ + e⁻ → CH* + H₂ + H* + e⁻
 class ND3Process : public CH4DissociationProcess
 {
 public:

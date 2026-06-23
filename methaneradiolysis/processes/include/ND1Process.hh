@@ -4,6 +4,9 @@
 #include "CH4DissociationProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+//ND1 : CH₄ + e⁻ -> CH3* + H* + e⁻
+
+
 class ND1Process : public CH4DissociationProcess {
 public:
     ND1Process(): CH4DissociationProcess("ND1Process",

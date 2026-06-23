@@ -3,8 +3,7 @@
 
 #include "CH4PhotonProcess.hh"
 
-
-
+// CH G-band emission (B²Σ⁻→X²Π electronic transition)
 class CHGBandProcess : public CH4PhotonProcess
 {
 public:

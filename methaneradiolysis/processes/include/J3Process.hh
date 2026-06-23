@@ -4,6 +4,7 @@
 #include "CH4RotationalVibrationalProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// Rotational excitation J=0→3 transition
 class J3Process : public CH4RotationalVibrationalProcess {
 public:
     J3Process() : CH4RotationalVibrationalProcess("J3Process", 7.8e-3 * eV){}

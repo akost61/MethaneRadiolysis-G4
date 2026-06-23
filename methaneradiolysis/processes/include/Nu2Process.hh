@@ -4,6 +4,7 @@
 #include "CH4RotationalVibrationalProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// ν₂ (E) degenerate H–C–H bending mode
 class Nu2Process : public CH4RotationalVibrationalProcess {
 public:
     Nu2Process() : CH4RotationalVibrationalProcess("Nu2Process", 1.90e-1 * eV){}

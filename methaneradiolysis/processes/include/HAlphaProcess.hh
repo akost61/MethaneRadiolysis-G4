@@ -4,6 +4,7 @@
 #include "CH4PhotonProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// Balmer-alpha (n=3→2) photon emission from excited H*
 class HAlphaProcess : public CH4PhotonProcess {
 public:
     HAlphaProcess(): CH4PhotonProcess("H-alpha",1.89  * eV) {}

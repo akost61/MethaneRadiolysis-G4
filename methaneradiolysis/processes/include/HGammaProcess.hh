@@ -3,6 +3,7 @@
 
 #include "CH4PhotonProcess.hh"
 
+// Balmer-gamma (n=5→2) photon emission from excited H*
 class HGammaProcess : public CH4PhotonProcess
 {
 public:

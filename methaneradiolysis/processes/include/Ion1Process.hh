@@ -4,6 +4,8 @@
 #include "CH4IonizationProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+//Ion_1 : CH₄ + e⁻ -> CH4⁺ +  2e⁻
+
 class Ion1Process : public CH4IonizationProcess {
 public:
     Ion1Process()

@@ -4,6 +4,7 @@
 #include "CH4RotationalVibrationalProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// ν₃ (T₂) asymmetric C–H stretch vibrational mode
 class Nu3Process : public CH4RotationalVibrationalProcess {
 public:
     Nu3Process() : CH4RotationalVibrationalProcess("Nu3Process", 3.74e-1 * eV){}

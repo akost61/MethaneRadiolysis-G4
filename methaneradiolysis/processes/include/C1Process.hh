@@ -4,6 +4,7 @@
 #include "CH4PhotonProcess.hh"
 #include "G4SystemOfUnits.hh"
 
+// CI neutral carbon emission line
 class C1Process : public CH4PhotonProcess {
 public:
     C1Process()

@@ -4,8 +4,12 @@
 #include "CH4DiscreteProcess.hh"
 #include "globals.hh"
 
+// Handles rotational (J3, J4) and vibrational (Nu_1 through Nu_4) excitation
+// channels of CH4. No secondary particles are produced; the electron simply
+// loses fEnergyDeposit + recoilEnergy to internal molecular excitation.
 class CH4RotationalVibrationalProcess : public CH4DiscreteProcess {
     public:
+        // depositEnergy: the characteristic energy of the excitation mode (e.g. rotational quantum, vibrational mode energy).
         CH4RotationalVibrationalProcess(const G4String& name, G4double depositEnergy);
 
         ~CH4RotationalVibrationalProcess() override = default;
@@ -14,7 +18,7 @@ class CH4RotationalVibrationalProcess : public CH4DiscreteProcess {
                                         const G4Step&  step) override;
 
     protected:
-            G4double fEnergyDeposit;
+        G4double fEnergyDeposit;   // fixed energy deposited per interaction
 
 };
 

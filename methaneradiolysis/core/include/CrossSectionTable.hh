@@ -4,16 +4,34 @@
 #include <vector>
 #include <string>
 
-
+// Stores tabulated electron-impact cross-sections for all CH4 interaction
+// channels. All cross-sections are in mm^2 (Geant4 internal units). Getters
+// interpolate using log-log scaling when both bracketing values are positive,
+// and fall back to linear interpolation otherwise.
+//
+// Channel key:
+//   Elastic            -- elastic scattering
+//   Ion_1 ... Ion_7    -- ionization channels (different orbital thresholds)
+//   ND_1 ... ND_3      -- neutral dissociation channels
+//   EA                 -- electron attachment
+//   Nu_1 ... Nu_4      -- vibrational excitation modes
+//   J3, J4             -- rotational excitation transitions
+//   Lya/Lyb/Lyg        -- Lyman-series photon emission (H*)
+//   Ha/Hb/Hg/Hd        -- Balmer-series photon emission (H*)
+//   CHG                -- CH* emission
+//   CI, CIII, CIV      -- carbon emission lines
+//   Total              -- sum of all channels
 class CrossSectionTable
 {
 public:
     CrossSectionTable();
     ~CrossSectionTable() = default;
 
-
+    // Parses the CSV, maps named columns to internal vectors, and converts
+    // cross-sections from the file's units to mm^2. Throws on missing columns or empty data.
     void LoadFromCSV(const std::string& filename);
 
+    // Interpolated cross-section getters — input in eV, output in mm^2.
     double GetElastic  (double E_eV) const;
     double GetIon1     (double E_eV) const;
     double GetIon2     (double E_eV) const;
@@ -43,16 +61,16 @@ public:
     double GetC3       (double E_eV) const;
     double GetC4       (double E_eV) const;
     double GetC1       (double E_eV) const;
-
     double GetTotal    (double E_eV) const;
 
-
+    // Randomly selects a process channel weighted by its cross-section fraction at E_eV.
     int SampleProcess(double E_eV) const;
 
     bool IsLoaded()  const { return !fEnergy.empty(); }
     int  NumPoints() const { return static_cast<int>(fEnergy.size()); }
 
 private:
+    // Log-log interpolation (falls back to linear if either endpoint is zero).
     double Interpolate(const std::vector<double>& xs, double E_eV) const;
 
     std::vector<double> fEnergy;   // eV
@@ -72,21 +90,19 @@ private:
     std::vector<double> fNu2;      // mm^2
     std::vector<double> fNu3;      // mm^2
     std::vector<double> fNu4;      // mm^2
-    std::vector<double> fJ3;      // mm^2
-    std::vector<double> fJ4;      // mm^2
-
+    std::vector<double> fJ3;       // mm^2
+    std::vector<double> fJ4;       // mm^2
     std::vector<double> fLya;      // mm^2
-    std::vector<double> fLyb;       // mm^2
+    std::vector<double> fLyb;      // mm^2
     std::vector<double> fLyg;      // mm^2
-    std::vector<double> fHa;      // mm^2
-    std::vector<double> fHb;      // mm^2
-    std::vector<double> fHg;      // mm^2
-    std::vector<double> fHd;      // mm^2
+    std::vector<double> fHa;       // mm^2
+    std::vector<double> fHb;       // mm^2
+    std::vector<double> fHg;       // mm^2
+    std::vector<double> fHd;       // mm^2
     std::vector<double> fCHG;      // mm^2
-    std::vector<double> fC3;      // mm^2
-    std::vector<double> fC4;      // mm^2
-    std::vector<double> fC1;      // mm^2
-
+    std::vector<double> fC3;       // mm^2
+    std::vector<double> fC4;       // mm^2
+    std::vector<double> fC1;       // mm^2
     std::vector<double> fTotal;    // mm^2
 };
 
