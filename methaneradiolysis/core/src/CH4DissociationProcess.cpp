@@ -1,6 +1,6 @@
 #include "CH4DissociationProcess.hh"
 #include "RecoilLookUp.hh"
-#include "G4AnalysisManager.hh"
+// #include "G4AnalysisManager.hh"
 #include "G4RunManager.hh"
 #include "G4Run.hh"
 #include "VoxelEnergyMap.hh"
@@ -18,7 +18,7 @@ G4VParticleChange* CH4DissociationProcess::PostStepDoIt(const G4Track& track,
                                                          const G4Step&  step)
 {
     aParticleChange.Initialize(track);
-    auto* am = G4AnalysisManager::Instance();
+    // auto* am = G4AnalysisManager::Instance();
 
     G4double      energy   = track.GetKineticEnergy();
     G4ThreeVector oldDir   = track.GetMomentumDirection();
@@ -65,14 +65,14 @@ G4VParticleChange* CH4DissociationProcess::PostStepDoIt(const G4Track& track,
             new G4Track(product, track.GetGlobalTime(), position);
         productTrack->SetTouchableHandle(track.GetTouchableHandle());
         aParticleChange.AddSecondary(productTrack);
-        am->FillNtupleIColumn(0, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
-        am->FillNtupleDColumn(0, 1, track.GetTrackID());
-        am->FillNtupleDColumn(0, 2, position.x() / CLHEP::mm);
-        am->FillNtupleDColumn(0, 3, position.y() / CLHEP::mm);
-        am->FillNtupleDColumn(0, 4, position.z() / CLHEP::mm);
-        am->FillNtupleSColumn(0, 5, productName);
-        am->FillNtupleDColumn(0, 6, track.GetGlobalTime() / CLHEP::ns);
-        am->AddNtupleRow(0);
+        // am->FillNtupleIColumn(0, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+        // am->FillNtupleDColumn(0, 1, track.GetTrackID());
+        // am->FillNtupleDColumn(0, 2, position.x() / CLHEP::mm);
+        // am->FillNtupleDColumn(0, 3, position.y() / CLHEP::mm);
+        // am->FillNtupleDColumn(0, 4, position.z() / CLHEP::mm);
+        // am->FillNtupleSColumn(0, 5, productName);
+        // am->FillNtupleDColumn(0, 6, track.GetGlobalTime() / CLHEP::ns);
+        // am->AddNtupleRow(0);
     }
 
     G4double newEnergy = energy - energyDeposit;

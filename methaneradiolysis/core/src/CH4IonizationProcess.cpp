@@ -5,7 +5,7 @@
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
 #include "VoxelEnergyMap.hh"
-#include "G4AnalysisManager.hh"
+// #include "G4AnalysisManager.hh"
 #include "G4RunManager.hh"
 #include "G4Run.hh"
 #include "RecoilLookUp.hh"
@@ -28,7 +28,7 @@ G4VParticleChange* CH4IonizationProcess::PostStepDoIt(const G4Track& track,
                                                        const G4Step&  step)
 {
     aParticleChange.Initialize(track);
-    auto* am = G4AnalysisManager::Instance();
+    // auto* am = G4AnalysisManager::Instance();
 
     G4double      energy   = track.GetKineticEnergy();
     G4ThreeVector oldDir   = track.GetMomentumDirection();
@@ -89,14 +89,14 @@ G4VParticleChange* CH4IonizationProcess::PostStepDoIt(const G4Track& track,
             new G4Track(product, track.GetGlobalTime(), position);
         productTrack->SetTouchableHandle(track.GetTouchableHandle());
         aParticleChange.AddSecondary(productTrack);
-        am->FillNtupleIColumn(0, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
-        am->FillNtupleDColumn(0, 1, track.GetTrackID());
-        am->FillNtupleDColumn(0, 2, position.x() / CLHEP::mm);
-        am->FillNtupleDColumn(0, 3, position.y() / CLHEP::mm);
-        am->FillNtupleDColumn(0, 4, position.z() / CLHEP::mm);
-        am->FillNtupleSColumn(0, 5, productName);
-        am->FillNtupleDColumn(0, 6, track.GetGlobalTime() / CLHEP::ns);
-        am->AddNtupleRow(0);
+        // am->FillNtupleIColumn(0, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+        // am->FillNtupleDColumn(0, 1, track.GetTrackID());
+        // am->FillNtupleDColumn(0, 2, position.x() / CLHEP::mm);
+        // am->FillNtupleDColumn(0, 3, position.y() / CLHEP::mm);
+        // am->FillNtupleDColumn(0, 4, position.z() / CLHEP::mm);
+        // am->FillNtupleSColumn(0, 5, productName);
+        // am->FillNtupleDColumn(0, 6, track.GetGlobalTime() / CLHEP::ns);
+        // am->AddNtupleRow(0);
     }
 
     if (newEnergy < GetCutOffEnergy()) {
@@ -205,16 +205,18 @@ G4double CH4IonizationProcess::GetSecondaryEnergy(G4double kineticEnergy) const
     double Ymax = (kineticEnergy - fIonizationPotential) / (2.0 * eV); 
     double Ymin = 2.0;                                  
     G4double secondaryAverage = SecondaryAverageEnergy(kineticEnergy) / eV; 
-    if (Ymin > Ymax){
+    if (Ymin >= Ymax)
+    {
         return 0;
-
     }
 
     secondaryAverage = std::max(Ymin + 1e-6, std::min(secondaryAverage, Ymax - 1e-6));
 
     double exponent = ((Ymin - secondaryAverage) / (secondaryAverage - Ymax));
 
-    if ((((Ymin - Ymax) * std::pow((1 - rnd), exponent)) + Ymax) < 0.0 ){
+    if ((((Ymin - Ymax) * std::pow((1 - rnd), exponent)) + Ymax) < 0.0 )
+    {
+        return 0;
         G4cout<< theProcessName << G4endl;
         G4cout << "Incoming Energy: " << kineticEnergy / eV<< G4endl;
         G4cout << "Secondary Energy Average: " << secondaryAverage << G4endl;

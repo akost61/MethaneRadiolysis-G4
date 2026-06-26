@@ -1,7 +1,7 @@
 #include "CH4PhotonProcess.hh"
 #include "RecoilLookUp.hh"
 #include "VoxelEnergyMap.hh"
-#include "G4AnalysisManager.hh"
+// #include "G4AnalysisManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4RunManager.hh"
 #include "G4Run.hh"
@@ -52,14 +52,14 @@ G4VParticleChange* CH4PhotonProcess::PostStepDoIt(const G4Track& track,
     aParticleChange.AddSecondary(photonTrack);
     aParticleChange.ProposeLocalEnergyDeposit(0);
 
-    auto* am = G4AnalysisManager::Instance();
-    am->FillNtupleIColumn(1, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
-    am->FillNtupleDColumn(1, 1, position.x() / mm);
-    am->FillNtupleDColumn(1, 2, position.y() / mm);
-    am->FillNtupleDColumn(1, 3, position.z() / mm);
-    am->FillNtupleDColumn(1, 4, fPhotonEnergy / eV);
-    am->FillNtupleDColumn(1, 5, track.GetGlobalTime() / ns);
-    am->AddNtupleRow(1);
+    // auto* am = G4AnalysisManager::Instance();
+    // am->FillNtupleIColumn(1, 0, G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID() + 1);
+    // am->FillNtupleDColumn(1, 1, position.x() / mm);
+    // am->FillNtupleDColumn(1, 2, position.y() / mm);
+    // am->FillNtupleDColumn(1, 3, position.z() / mm);
+    // am->FillNtupleDColumn(1, 4, fPhotonEnergy / eV);
+    // am->FillNtupleDColumn(1, 5, track.GetGlobalTime() / ns);
+    // am->AddNtupleRow(1);
 
     energyLoss = energyLoss + recoilEnergy;
 

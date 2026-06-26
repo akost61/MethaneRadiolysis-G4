@@ -49,9 +49,9 @@ void VoxelEnergyMap::SaveToFile(const std::string& filename) const {
     out << std::fixed << std::setprecision(6);
 
     for (const auto& [idx, data] : fMap) {
-        G4double x = (idx.ix * 2.0 - 1000.0 + 1.0) * mm;  // centre of voxel
-        G4double y = (idx.iy * 2.0 - 1000.0 + 1.0) * mm;
-        G4double z = (idx.iz * 2.0 - 1200.0 + 1.0) * mm;
+        G4double x = (idx.ix * 2.0 - 1000.0) * mm;  // centre of voxel
+        G4double y = (idx.iy * 2.0 - 1000.0) * mm;
+        G4double z = (idx.iz * 2.0 - 1200.0) * mm;
 
         out << x / mm << ",  " << y / mm << ",  " << z / mm << ",  "
             << data.energyPE / eV << ",  "

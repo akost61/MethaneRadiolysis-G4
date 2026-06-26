@@ -8,12 +8,15 @@ MyActionInitialization::~MyActionInitialization() {}
 
 void MyActionInitialization::BuildForMaster() const
 {
-    SetUserAction(new RunAction());
+    SetUserAction(new RunAction());  // no stepping action needed here
 }
 
 void MyActionInitialization::Build() const
 {
-    SetUserAction(new RunAction());
-    SetUserAction(new SteppingAction(fcutOffEnergy));
+    SteppingAction* steppingAction = new SteppingAction(fcutOffEnergy);
+    RunAction* runAction = new RunAction(steppingAction);
+
+    SetUserAction(runAction);
+    SetUserAction(steppingAction);
     SetUserAction(new MyPrimaryGenerator(fInitialEnergy));
 }
