@@ -32,11 +32,13 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct()
 
     G4Material* nistMethane = nist->FindOrBuildMaterial("G4_METHANE");
 
+
     G4double stpDensity    = 0.000667 * g/cm3;
-    G4double stpTemp       = 273.15 * kelvin;
+    G4double stpTemp       = 293.15 * kelvin;
     G4double stpPressure   = 1.0 * atmosphere;
     G4double scaledDensity = stpDensity * (fPressure / stpPressure) * (stpTemp / fTemperature);
 
+    G4cout << scaledDensity / (g/cm3) << G4endl;
 
 
     G4Material* methane25C = nist->BuildMaterialWithNewDensity(
@@ -46,7 +48,6 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct()
         fTemperature,
         fPressure
     );
-
 
     G4double cylinder_radius = fCylinderRadius;
     G4double cylinder_height = fCylinderHeight;
