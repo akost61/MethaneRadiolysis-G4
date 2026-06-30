@@ -56,14 +56,7 @@ int main(int argc, char** argv) {
 
     cmd("/tracking/verbose 0");
 
-    int blockSize = 1;
-    int nBlocks   = nRuns / blockSize;
-    int remainder = nRuns % blockSize;
-
-    for (int i = 0; i < nBlocks; i++)
-        cmd("/run/beamOn " + std::to_string(blockSize));
-    if (remainder > 0)
-        cmd("/run/beamOn " + std::to_string(remainder));
+    cmd("/run/beamOn " + std::to_string(nRuns));
     G4cout << "---beamOn complete---" << G4endl;
 
     delete runManager;

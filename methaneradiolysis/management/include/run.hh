@@ -19,18 +19,26 @@ public:
     void EndOfRunAction(const G4Run*)   override;
 
     VoxelEnergyMap* GetMap() const { return fMap; }
-    void MergeCounts(const std::map<std::string, int>& counts) const;
+
+    // Called from EventAction on worker thread (no lock — worker-local)
+    void RecordEventCounts(int eventID, const std::map<std::string, int>& counts);
+
+    // Called by worker EndOfRunAction to send its batch to master
+    void MergeEventData(const std::vector<std::pair<int, std::map<std::string, int>>>& data) const;
 
 private:
-    VoxelEnergyMap*                    fMap = nullptr;
-    SteppingAction*                    fSteppingAction;
-    mutable std::map<std::string, int> fBlockCounts;
-    mutable std::mutex                 fMutex;
-    mutable std::vector<std::string>   fColumnNames;
-    int                                fBlockCounter = 0;
-    std::string                        fFilename;
+    VoxelEnergyMap* fMap = nullptr;
+    SteppingAction* fSteppingAction;
+    std::string     fFilename;
 
-    void WriteRow();
+    // Worker-local: accumulated per-event snapshots for this thread
+    std::vector<std::pair<int, std::map<std::string, int>>> fEventData;
+
+    // Master-only: all event snapshots merged from workers
+    mutable std::vector<std::pair<int, std::map<std::string, int>>> fAllEventData;
+    mutable std::mutex fMutex;
+
+    void WriteAllRows();
 };
 
 #endif
