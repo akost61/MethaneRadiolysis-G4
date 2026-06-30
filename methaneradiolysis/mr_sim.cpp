@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 
     G4double cutOffEnergy   = 7.0   * eV;
     G4double initialEnergy  = 100.0 * keV;
-    int      nRuns          = (argc > 1) ? std::stoi(argv[1]) : 300000;
+    int      nRuns          = (argc > 1) ? std::stoi(argv[1]) : 200000;
     G4double cylinderRadius = 50.0  * cm;
     G4double cylinderHeight = 60.0  * cm;
     G4double temperature    = 293.15 * kelvin;
@@ -56,12 +56,14 @@ int main(int argc, char** argv) {
 
     cmd("/tracking/verbose 0");
 
-    for (int i = 1; (i * 10000) <= nRuns; i++){
-        G4cout<< "hi: "<< (i*10000)<<G4endl;
-        cmd("/run/beamOn 10000");
-    }
+    int blockSize = 1;
+    int nBlocks   = nRuns / blockSize;
+    int remainder = nRuns % blockSize;
 
-    // cmd("/run/beamOn " + std::to_string(nRuns));
+    for (int i = 0; i < nBlocks; i++)
+        cmd("/run/beamOn " + std::to_string(blockSize));
+    if (remainder > 0)
+        cmd("/run/beamOn " + std::to_string(remainder));
     G4cout << "---beamOn complete---" << G4endl;
 
     delete runManager;

@@ -4,6 +4,10 @@
 #include "G4UserRunAction.hh"
 #include "VoxelEnergyMap.hh"
 #include "stepping.hh"
+#include <map>
+#include <mutex>
+#include <string>
+#include <vector>
 
 class RunAction : public G4UserRunAction {
 public:
@@ -15,16 +19,18 @@ public:
     void EndOfRunAction(const G4Run*)   override;
 
     VoxelEnergyMap* GetMap() const { return fMap; }
+    void MergeCounts(const std::map<std::string, int>& counts) const;
 
 private:
-    VoxelEnergyMap* fMap = nullptr;
-    SteppingAction*            fSteppingAction;
-    std::map<std::string, int> fBlockCounts;   // accumulated over 100 runs
-    int                        fRunCounter;
-    std::string                fFilename;
+    VoxelEnergyMap*                    fMap = nullptr;
+    SteppingAction*                    fSteppingAction;
+    mutable std::map<std::string, int> fBlockCounts;
+    mutable std::mutex                 fMutex;
+    mutable std::vector<std::string>   fColumnNames;
+    int                                fBlockCounter = 0;
+    std::string                        fFilename;
 
     void WriteRow();
-
 };
 
 #endif
