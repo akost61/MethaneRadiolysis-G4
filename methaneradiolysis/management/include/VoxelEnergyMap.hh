@@ -14,6 +14,20 @@
 struct VoxelData {
     G4double energyPE = 0.0;
     G4double energyKE = 0.0;
+    G4int ch4plus = 0;
+    G4int ch3plus = 0;
+    G4int ch2plus = 0;
+    G4int chplus = 0;
+    G4int ch3star = 0;
+    G4int ch2star = 0;
+    G4int chstar = 0;
+    G4int hstar = 0;
+    G4int cplus = 0;
+    G4int h2plus = 0;
+    G4int hneg = 0;
+    G4int hplus = 0;
+    G4int h2 = 0;
+
 };
 
 struct VoxelIndex {
@@ -40,6 +54,7 @@ public:
 
     void SetDimensions(G4int nx, G4int ny, G4int nz);
     void Deposit(G4int ix, G4int iy, G4int iz, G4double pe, G4double ke);
+    void RecordProduct(G4int ix, G4int iy, G4int iz, const std::string& name);
 
     const VoxelData* GetVoxel(G4int ix, G4int iy, G4int iz) const;
     std::size_t OccupiedVoxels() const { return fMap.size(); }
