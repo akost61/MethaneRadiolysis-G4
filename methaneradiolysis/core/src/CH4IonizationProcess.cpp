@@ -131,6 +131,8 @@ G4double CH4IonizationProcess::SecondaryAverageEnergy(G4double kineticEnergy) co
     double methaneMass = 2.6637e-23;
     double E_eV = kineticEnergy / eV;
 
+    E_ev = 100000 * eV;
+
     if (kineticEnergy < 1000 * eV) {
         return ((28.3829/ 985.4) * E_eV -0.42054) * eV; 
     } else {
@@ -176,7 +178,6 @@ G4double CH4IonizationProcess::SecondaryAverageEnergy(G4double kineticEnergy) co
         {ion1,  12.60}, {ion2,  14.52}, {ion3,  15.30}, {ion4,  18.28},
         {ion5,  20.10}, {ion6,  20.42}, {ion7,  19.67},
         {nd1,    4.68}, {nd2,    4.95}, {nd3,    9.46},
-        {ea,     0.00},
         {nu1,  3.62e-1}, {nu2, 1.90e-1}, {nu3, 3.74e-1}, {nu4, 1.62e-1},
         {j3,   7.8e-3},  {j4,  1.3e-2},
         {lya,  10.20}, {lyb,  12.08}, {lyg,  12.75},
@@ -184,6 +185,49 @@ G4double CH4IonizationProcess::SecondaryAverageEnergy(G4double kineticEnergy) co
         {chg,   2.88}, {c3,    6.48}, {c4,    7.49}, {c1,    8.00},
         {elastic, 0.00}
     };
+
+    std::vector<G4double> betaCDF = GetAngularDist().SelectDistribution(kineticEnergy);
+
+
+    for (size_t i =0; i < betaCDF.size(); i++) {
+        G4cout << "Angle: " << i << " CDF: " << betaCDF[i]<< G4endl;
+    }
+    G4cout<< G4endl;
+    
+
+    std::vector<G4double>  betaProbabilities;
+    betaProbabilities.reserve(betaCDF.size());
+
+    betaProbabilities.push_back(betaCDF[0]);
+
+    for (size_t i = 1; i < betaCDF.size(); ++i) {
+        betaProbabilities.push_back(betaCDF[i] - betaCDF[i - 1]);
+    }
+
+    for (size_t i =0; i < betaProbabilities.size(); i++) {
+        G4cout << "Angle: " << i << " Probability: " << betaProbabilities[i]<< G4endl;
+    }
+    G4cout<< G4endl;
+
+    std::vector<G4double> recoilEnergies = GetRecoil().SelectDistribution(kineticEnergy);
+
+    for (size_t i =0; i < recoilEnergies.size(); i++) {
+        G4cout << "Angle: " << i << " Energy: " << recoilEnergies[i]<< G4endl;
+    }
+    G4cout<< G4endl;
+
+    double weightedRecoilLoss = 0.0;
+
+    for (size_t i = 0; i < recoilEnergies.size(); i++){
+        weightedRecoilLoss += betaProbabilities[i] * recoilEnergies[i];
+    }
+
+    double totalSigma = 0.0;
+    for (const auto& ch : channels) {
+        totalSigma += ch.crossSection;
+    }
+    
+    double sigmaWeightedRecoilLoss = weightedRecoilLoss * totalSigma;
 
     double weightedEnergyLoss = 0.0;
     for (const auto& ch : channels) {
@@ -195,7 +239,7 @@ G4double CH4IonizationProcess::SecondaryAverageEnergy(G4double kineticEnergy) co
         ionWeightedSum += channels[i].crossSection;
     }
 
-    return (((MSP * methaneMass) - weightedEnergyLoss) / ionWeightedSum) * eV;
+    return (((MSP * methaneMass) - weightedEnergyLoss - sigmaWeightedRecoilLoss) / ionWeightedSum) * eV;
 }
 
 

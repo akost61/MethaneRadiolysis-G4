@@ -1,12 +1,13 @@
 #include "CH4DiscreteProcess.hh"
-
-G4double CH4DiscreteProcess::fCutOffEnergy = 0.0;
 #include "G4Electron.hh"
 #include "G4Material.hh"
 #include "G4PhysicsFreeVector.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include <functional>
+
+G4double CH4DiscreteProcess::fCutOffEnergy = 0.0;
+
 
 CH4DiscreteProcess::CH4DiscreteProcess(const G4String& name)
     : G4VDiscreteProcess(name, fElectromagnetic)
